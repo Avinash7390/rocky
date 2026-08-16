@@ -42,6 +42,18 @@ auto-approve. See that file's `RISK_TIERS` table for the exact
 classification, and its module docstring for why unclassified tools default
 to "ask" rather than silent allow.
 
+**Phase 2 — Notion integration** ([tasks/02-notion-integration.md](tasks/02-notion-integration.md)):
+Notion read/create-page tools behind the permission gate.
+
+```bash
+.venv/bin/python notion_main.py
+```
+
+Needs `NOTION_TOKEN` and `NOTION_ROOT_PAGE_ID` set in `.env` — see the task
+doc for how to create the internal integration and share a page with it. The
+create-page call is a write action: the permission gate will print the tool
+call and block on a `y/N` terminal prompt before it runs.
+
 ## Layout
 
 ```
