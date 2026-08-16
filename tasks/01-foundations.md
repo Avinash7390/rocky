@@ -12,7 +12,7 @@ integration exists.
 
 - Python project scaffold matching the directory layout in README.md's
   Orchestration Layer section
-  (`agent/main.py`, `.claude/skills/`, `.claude/hooks/`, `.claude/subagents/`,
+  (`agent/main.py`, `.claude/skills/`, `hooks/`, `.claude/subagents/`,
   `tools/`, `mcp_servers.json`, `memories/`).
 - Minimal `main.py` that starts a single long-running process and invokes the
   Claude Agent SDK (`claude-agent-sdk`) with a trivial built-in-tools-only

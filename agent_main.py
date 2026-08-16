@@ -12,8 +12,6 @@ one integration in isolation.
 
 import asyncio
 import os
-import sys
-from pathlib import Path
 
 from claude_agent_sdk import (
     AssistantMessage,
@@ -23,10 +21,8 @@ from claude_agent_sdk import (
     TextBlock,
 )
 
-sys.path.insert(0, str(Path(__file__).parent / ".claude" / "hooks"))
-from permission_gate import can_use_tool  # noqa: E402
-
-from tools import cost_guard  # noqa: E402
+from hooks.permission_gate import can_use_tool
+from tools import cost_guard
 
 GITHUB_MCP_URL = "https://api.githubcopilot.com/mcp/"
 

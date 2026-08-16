@@ -2,7 +2,7 @@
 section).
 
 Search is auto-approved by the permission gate; send is a write action and
-blocks on confirmation — see .claude/hooks/permission_gate.py. The Google
+blocks on confirmation — see hooks/permission_gate.py. The Google
 API client is synchronous, so each call runs in a thread rather than
 blocking the event loop.
 """

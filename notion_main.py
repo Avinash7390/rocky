@@ -8,15 +8,11 @@ anything higher-stakes is involved.
 
 import asyncio
 import os
-import sys
-from pathlib import Path
 
 from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, TextBlock, query
 
-sys.path.insert(0, str(Path(__file__).parent / ".claude" / "hooks"))
-from permission_gate import can_use_tool  # noqa: E402
-
-from tools.notion_tool import notion_server  # noqa: E402
+from hooks.permission_gate import can_use_tool
+from tools.notion_tool import notion_server
 
 
 def _require_config() -> str:

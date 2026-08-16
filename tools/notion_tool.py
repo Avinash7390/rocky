@@ -2,7 +2,7 @@
 deep dive subsection).
 
 Read is auto-approved by the permission gate; create is a write action and
-blocks on confirmation — see .claude/hooks/permission_gate.py.
+blocks on confirmation — see hooks/permission_gate.py.
 """
 
 from typing import Any
