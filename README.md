@@ -44,6 +44,26 @@ try it. Google (Gmail/Drive/Calendar/YouTube) and Spotify each open a
 one-time browser consent flow on first use and cache the resulting token
 (`.google_token.json` / `.spotify_token.json`, both gitignored).
 
+**Why custom tools instead of GitHub's hosted-MCP pattern for everything:**
+GitHub, Notion, and Google (Gmail/Drive/Calendar) all now ship official MCP
+servers, so it's fair to ask why only GitHub is wired as a remote MCP server
+while the rest are custom `tools/*.py` wrappers around each service's REST
+API. Checked as of 2026-08:
+- **Notion**: the official *hosted* server (`mcp.notion.com`) is OAuth-only;
+  the official *self-hosted* one (`makenotion/notion-mcp-server`) takes the
+  same static internal-integration-token this repo already uses, but runs
+  via `npx` — an extra Node.js runtime dependency for no functional gain
+  over the pure-Python client already here.
+- **Gmail/Drive/Calendar**: Google's hosted MCP servers
+  (`gmailmcp.googleapis.com` etc.) are all in **Developer Preview**, not GA
+  — they require enrolling in Google's [Workspace Developer Preview
+  Program](https://developers.google.com/workspace/preview) before they
+  work at all. Gmail's is also **draft-only** (`create_draft`, no
+  `send_message`), which would drop this repo's `gmail_send` tool entirely.
+
+Re-evaluate this if those servers reach GA, or if the Developer Preview
+Program becomes easy to enroll in and Gmail gains send support.
+
 Set `LANGFUSE_PUBLIC_KEY`/`LANGFUSE_SECRET_KEY` to trace any run in
 Langfuse; every entrypoint runs untraced (not broken) without them.
 
