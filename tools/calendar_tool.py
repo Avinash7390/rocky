@@ -3,7 +3,7 @@ Integration Layer and Trigger Layer sections).
 
 list_events is auto-approved by the permission gate; create_event is a
 write action and blocks on confirmation — see
-.claude/hooks/permission_gate.py. Also used by the Phase 7 push-webhook
+hooks/permission_gate.py. Also used by the Phase 7 push-webhook
 trigger (see the Trigger Layer section's Calendar push webhook
 subsection), not built yet.
 """

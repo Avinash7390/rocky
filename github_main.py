@@ -8,13 +8,10 @@ README.md's Suggested Build Order (step 3) and Integration Layer sections.
 
 import asyncio
 import os
-import sys
-from pathlib import Path
 
 from claude_agent_sdk import AssistantMessage, ClaudeAgentOptions, TextBlock, query
 
-sys.path.insert(0, str(Path(__file__).parent / ".claude" / "hooks"))
-from permission_gate import can_use_tool  # noqa: E402
+from hooks.permission_gate import can_use_tool
 
 GITHUB_MCP_URL = "https://api.githubcopilot.com/mcp/"
 

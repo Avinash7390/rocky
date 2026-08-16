@@ -75,7 +75,7 @@ Langfuse; every entrypoint runs untraced (not broken) without them.
 
 Every write-tier tool call (Notion page creation, GitHub issue/PR writes,
 Gmail send, Calendar event creation, ...) is gated by
-`.claude/hooks/permission_gate.py`: it prints the tool call and blocks on a
+`hooks/permission_gate.py`: it prints the tool call and blocks on a
 `y/N` terminal prompt before running. Read-only calls auto-approve. See that
 file's `RISK_TIERS` table for the exact classification, and its module
 docstring for why unclassified tools default to "ask" rather than silent
@@ -96,10 +96,10 @@ rocky/
 ├── notion_main.py                  # Phase 2: Notion tools + permission gate
 ├── github_main.py                  # Phase 3: GitHub MCP + permission gate
 ├── agent_main.py                   # Phase 6 / unified: every configured integration, interactively
+├── hooks/
+│   └── permission_gate.py          # shared risk-tier table + canUseTool + dev-mode switch, all phases
 ├── .claude/
 │   ├── skills/                      # empty until Phase 8
-│   ├── hooks/
-│   │   └── permission_gate.py       # shared risk-tier table + canUseTool + dev-mode switch, all phases
 │   └── subagents/                   # researcher.py lands in Phase 8
 ├── tools/
 │   ├── notion_client.py             # rate-limited Notion REST client
@@ -129,11 +129,6 @@ that the phase table above and each `tasks/*.md` file are drawn from.
 
 ### System Context
 
-![System context diagram: You trigger the Personal AI Agent System via text/voice and receive responses/notifications back; the agent connects bidirectionally to GitHub, Google Workspace (Gmail/Drive), Google Calendar, Spotify, and Notion, read-only to YouTube, sends reasoning calls to the Anthropic API, and sends traces/evals to Langfuse.](./assets/system_context.png)
-
-<details>
-<summary>Mermaid source</summary>
-
 ```mermaid
 flowchart TB
     You(["You"])
@@ -158,8 +153,6 @@ flowchart TB
     Agent -- "reasoning calls" --> AN
     Agent -- "traces + evals" --> LF
 ```
-
-</details>
 
 The agent sits between you and seven external systems. Everything it does is either a reaction to something you (or your calendar) triggered, or a scheduled sweep — there is no autonomous background agency beyond what [Security and Permission Tiers](#security-and-permission-tiers)' permission tiers allow.
 
@@ -331,14 +324,14 @@ Agent SDK, Python.
 
 ```
 main.py                   # trigger webhook server + SDK client wiring
+hooks/
+└── permission_gate.py
 .claude/
 ├── skills/
 │   ├── triage-inbox/SKILL.md
 │   ├── weekly-github-digest/SKILL.md
 │   ├── notion-capture/SKILL.md
 │   └── spotify-mood-playlist/SKILL.md
-├── hooks/
-│   └── permission_gate.py
 └── subagents/
     └── researcher.py
 tools/                    # custom (non-MCP) tools, e.g. Notion client, memory writer
