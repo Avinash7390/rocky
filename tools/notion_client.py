@@ -3,7 +3,8 @@
 Notion allows ~3 req/s per integration and returns 429s on bursts, and
 reading one page fans out into several calls (page -> block children ->
 nested blocks). Every call goes through a small semaphore + exponential
-backoff rather than firing sequentially with no throttling (TRD §11.1).
+backoff rather than firing sequentially with no throttling (see README.md's
+Notion integration deep dive subsection).
 """
 
 import asyncio

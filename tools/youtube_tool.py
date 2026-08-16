@@ -1,4 +1,5 @@
-"""YouTube tool exposed to the orchestrator, per TRD §11.2.
+"""YouTube tool exposed to the orchestrator (README.md's YouTube integration
+deep dive subsection).
 
 Read-only (`youtube.readonly` scope): subscriptions, playlists, and the
 Liked Videos playlist. No watch history — there's no API or OAuth scope

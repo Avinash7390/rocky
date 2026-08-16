@@ -1,4 +1,5 @@
-"""Daily spend cap for query() calls, per TRD §16.
+"""Daily spend cap for query() calls (README.md's Production Hardening
+Patterns section).
 
 A local JSON ledger is enough at personal scale — no need for a database
 just to track a running total against a cap. Used by agent_main.py (the

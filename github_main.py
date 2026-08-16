@@ -2,8 +2,8 @@
 
 Uses GitHub's official hosted remote MCP server
 (https://api.githubcopilot.com/mcp/) rather than the local Docker/npx
-variant, so there's no local runtime dependency beyond a token. TRD §17
-step 3, §11.
+variant, so there's no local runtime dependency beyond a token. See
+README.md's Suggested Build Order (step 3) and Integration Layer sections.
 """
 
 import asyncio

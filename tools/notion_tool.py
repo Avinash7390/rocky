@@ -1,4 +1,5 @@
-"""Notion tools exposed to the orchestrator, per TRD §11.1.
+"""Notion tools exposed to the orchestrator (README.md's Notion integration
+deep dive subsection).
 
 Read is auto-approved by the permission gate; create is a write action and
 blocks on confirmation — see .claude/hooks/permission_gate.py.

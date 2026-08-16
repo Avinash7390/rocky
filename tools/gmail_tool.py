@@ -1,4 +1,5 @@
-"""Gmail tools exposed to the orchestrator, per TRD §11.
+"""Gmail tools exposed to the orchestrator (README.md's Integration Layer
+section).
 
 Search is auto-approved by the permission gate; send is a write action and
 blocks on confirmation — see .claude/hooks/permission_gate.py. The Google

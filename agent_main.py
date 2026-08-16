@@ -5,9 +5,9 @@ Each integration only loads if its own config is present in .env — run
 this with whatever subset of NOTION_TOKEN / GITHUB_TOKEN /
 GOOGLE_CLIENT_ID+SECRET / SPOTIFY_CLIENT_ID+SECRET you've filled in, and
 it'll wire up exactly that subset, printing what got skipped and why. This
-is the entrypoint meant for testing everything together, per TRD §17; the
-per-phase *_main.py scripts remain for testing one integration in
-isolation.
+is the entrypoint meant for testing everything together, per README.md's
+Suggested Build Order; the per-phase *_main.py scripts remain for testing
+one integration in isolation.
 """
 
 import asyncio

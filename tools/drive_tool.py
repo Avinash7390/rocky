@@ -1,4 +1,5 @@
-"""Google Drive tool exposed to the orchestrator, per TRD §11.
+"""Google Drive tool exposed to the orchestrator (README.md's Integration
+Layer section).
 
 Read-only (`drive.readonly` scope) — no write path, so nothing here needs a
 permission-gate "write" entry.
