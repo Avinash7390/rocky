@@ -59,7 +59,7 @@ async def main() -> None:
             f"Agent SDK query failed: {exc}\n\n"
             "If this says 'Not logged in', the `claude` CLI the SDK spawns "
             "isn't authenticated yet — run `claude /login` in a terminal "
-            "(or set ANTHROPIC_API_KEY in agent/.env) and try again."
+            "(or set ANTHROPIC_API_KEY in .env) and try again."
         ) from exc
 
     print(reply)
