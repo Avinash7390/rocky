@@ -34,10 +34,14 @@ async def run(prompt: str) -> str:
     options = ClaudeAgentOptions(
         system_prompt="You are a helpful personal AI agent with access to Notion.",
         mcp_servers={"notion": notion_server},
-        allowed_tools=[
-            "mcp__notion__notion_read_page",
-            "mcp__notion__notion_create_page",
-        ],
+        # Deliberately no allowed_tools: an allowed_tools entry that names a
+        # whole tool (no "(...)" specifier) auto-approves it *before*
+        # can_use_tool runs — see claude_agent_sdk.types._whole_tool_allowed
+        # and CanUseToolShadowedWarning. Listing notion_create_page there
+        # would silently bypass the permission gate for the one write action
+        # it exists to protect. Leaving allowed_tools unset (default: no
+        # restriction) means every MCP tool call falls through to
+        # can_use_tool, which is what actually gates it.
         can_use_tool=can_use_tool,
     )
     reply_parts: list[str] = []
