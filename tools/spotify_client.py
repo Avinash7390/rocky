@@ -1,4 +1,5 @@
-"""Spotify OAuth2 (Authorization Code) helper, per TRD §11.
+"""Spotify OAuth2 (Authorization Code) helper (README.md's Integration
+Layer section).
 
 Read-only use case (currently-playing, recently-played, playlists) — no
 write scopes requested. First call opens a browser for consent and caches

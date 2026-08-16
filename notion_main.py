@@ -1,6 +1,7 @@
 """Phase 2 entrypoint: Notion tool + permission gate wired into the Agent SDK.
 
-Proves the auth-token -> integration-layer pattern (TRD §17 step 2) and
+Proves the auth-token -> integration-layer pattern (README.md's Suggested
+Build Order, step 2) and
 exercises the permission gate on a real write action (page creation) before
 anything higher-stakes is involved.
 """

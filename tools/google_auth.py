@@ -1,6 +1,7 @@
 """Shared Google OAuth2 helper for Gmail, Drive, Calendar, and YouTube.
 
-Desktop-app OAuth flow (TRD §11): the first run opens a browser for consent
+Desktop-app OAuth flow (README.md's Integration Layer section): the first
+run opens a browser for consent
 and caches the resulting token to .google_token.json (gitignored); later
 runs reuse the cached token and refresh it silently. One client + one
 cached token covers every scope below — Google's consent screen grants a

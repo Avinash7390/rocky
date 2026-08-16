@@ -1,9 +1,11 @@
-"""Google Calendar tools exposed to the orchestrator, per TRD §11, §10.4.
+"""Google Calendar tools exposed to the orchestrator (README.md's
+Integration Layer and Trigger Layer sections).
 
 list_events is auto-approved by the permission gate; create_event is a
 write action and blocks on confirmation — see
 .claude/hooks/permission_gate.py. Also used by the Phase 7 push-webhook
-trigger (TRD §10.4), not built yet.
+trigger (see the Trigger Layer section's Calendar push webhook
+subsection), not built yet.
 """
 
 import asyncio

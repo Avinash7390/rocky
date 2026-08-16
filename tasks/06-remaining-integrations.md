@@ -1,8 +1,8 @@
 # Phase 6 — Remaining Integrations
 
-**Build order:** TRD §17, step 6. **Depends on:** Phase 4 (Memory/permission
+**Build order:** README.md's Suggested Build Order, step 6. **Depends on:** Phase 4 (Memory/permission
 gate patterns established), Phase 5 (KB pipeline, if Gmail/Drive content
-should be searchable — otherwise these are live reads only per §1).
+should be searchable — otherwise these are live reads only, not indexed knowledge).
 
 ## Goal
 
@@ -13,7 +13,8 @@ given write-access risk.
 
 ## Scope
 
-- **Dev/staging mode + cost guardrails first** (TRD §15 flowchart, §16):
+- **Dev/staging mode + cost guardrails first** (README.md's Security and
+  Permission Tiers flowchart, Production Hardening Patterns section):
   a mode flag that routes writes through auto-approve in dev but always asks
   in prod, plus a daily spend cap wrapping `query()` calls.
 - **Gmail:** Google Workspace MCP, OAuth 2.0 Desktop app client,
@@ -28,17 +29,19 @@ given write-access risk.
   path needed.
 - **YouTube (partial, last):** separate OAuth scope, `youtube.readonly` —
   subscriptions, playlists, liked videos only. No watch history — this is a
-  platform limitation, not a build gap (TRD §11.2).
+  platform limitation, not a build gap (see README.md's YouTube integration
+  deep dive subsection).
 - Risk-tier table entries added for every new tool as it's built.
 
 ## Deliverables
 
-- [ ] Dev/staging mode flag live; permission-gate flowchart (§15) branches
+- [ ] Dev/staging mode flag live; permission-gate flowchart (README.md's
+      Security and Permission Tiers section) branches
       on it correctly in a manual test.
 - [ ] Daily spend cap enforced (log + hard stop) on `query()` calls.
 - [ ] Gmail, Drive, Calendar, Spotify, YouTube each reachable via their MCP
       tools with correct scopes; write actions (Gmail send, Calendar event
-      create) gated per TRD §11's table.
+      create) gated per README.md's Integration Layer table.
 
 ## Out of scope (later phases)
 
@@ -48,5 +51,4 @@ given write-access risk.
 
 ## References
 
-TRD §11 (integration table), §15 (dev/staging mode, permission flowchart),
-§16 (cost & rate-limit guardrails), §17 step 6.
+README.md's Integration Layer (integration table), Security and Permission Tiers (dev/staging mode, permission flowchart), and Production Hardening Patterns (cost & rate-limit guardrails) sections, plus Suggested Build Order (step 6).

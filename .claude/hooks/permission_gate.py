@@ -1,13 +1,15 @@
-"""Static risk-tier permission gate (TRD §9, §15).
+"""Static risk-tier permission gate (README.md's Orchestration Layer and
+Security and Permission Tiers sections).
 
 Risk-tier classification is a table you maintain per tool, not something the
 model decides about itself. Read-only tools auto-approve; write/destructive
 tools block on confirmation.
 
-No trigger webhook server exists yet (§10 is separate build-order work from
-tool integrations), so "ask" is a blocking terminal prompt for now — swap
-`_confirm` for a round-trip over the trigger channel once §10's server
-exists, without changing the risk table or the `can_use_tool` contract.
+No trigger webhook server exists yet (the Trigger Layer section is separate
+build-order work from tool integrations), so "ask" is a blocking terminal
+prompt for now — swap `_confirm` for a round-trip over the trigger channel
+once that server exists, without changing the risk table or the
+`can_use_tool` contract.
 
 Tool names for external MCP servers (GitHub, Google Workspace, Spotify)
 aren't guaranteed stable across server versions, and this file can't
@@ -29,20 +31,23 @@ from claude_agent_sdk import (
 
 RiskTier = Literal["read", "write", "destructive"]
 
-# Dev/staging mode (TRD §15 flowchart): in "dev"/"staging", write and
+# Dev/staging mode (README.md's Security and Permission Tiers flowchart):
+# in "dev"/"staging", write and
 # destructive calls auto-approve instead of blocking on a prompt. Defaults
 # to "prod" (always ask) so a missing/unset AGENT_MODE fails toward safety,
 # not convenience — you have to opt into the looser mode explicitly.
 AGENT_MODE = os.environ.get("AGENT_MODE", "prod").strip().lower()
 _DEV_MODES = {"dev", "development", "staging"}
 
-# Tool names are MCP-qualified: mcp__<server_name>__<tool_name>.
+# Tool names are MCP-qualified: mcp__<server_name>__<tool_name>. See
+# README.md's Integration Layer section (and its Notion/YouTube deep-dive
+# subsections) for the design rationale behind each of these.
 RISK_TIERS: dict[str, RiskTier] = {
-    # Notion (TRD §11.1)
+    # Notion
     "mcp__notion__notion_read_page": "read",
     "mcp__notion__notion_create_page": "write",
-    # GitHub (TRD §11) — official hosted remote MCP server, curated subset of
-    # its documented tools. Anything not listed here safely defaults to "ask".
+    # GitHub — official hosted remote MCP server, curated subset of its
+    # documented tools. Anything not listed here safely defaults to "ask".
     "mcp__github__get_repository": "read",
     "mcp__github__get_file_contents": "read",
     "mcp__github__list_commits": "read",
@@ -60,19 +65,19 @@ RISK_TIERS: dict[str, RiskTier] = {
     "mcp__github__create_or_update_file": "write",
     "mcp__github__push_files": "write",
     "mcp__github__delete_file": "destructive",
-    # Gmail (TRD §11)
+    # Gmail
     "mcp__gmail__gmail_search": "read",
     "mcp__gmail__gmail_send": "write",
-    # Google Drive (TRD §11) — read-only scope, no write tool exists
+    # Google Drive — read-only scope, no write tool exists
     "mcp__drive__drive_search": "read",
-    # Google Calendar (TRD §11)
+    # Google Calendar
     "mcp__calendar__calendar_list_events": "read",
     "mcp__calendar__calendar_create_event": "write",
-    # Spotify (TRD §11) — read-only use case, no write tools exist
+    # Spotify — read-only use case, no write tools exist
     "mcp__spotify__spotify_currently_playing": "read",
     "mcp__spotify__spotify_recently_played": "read",
     "mcp__spotify__spotify_playlists": "read",
-    # YouTube (TRD §11, §11.2) — read-only scope, no write tools exist
+    # YouTube — read-only scope, no write tools exist
     "mcp__youtube__youtube_list_subscriptions": "read",
     "mcp__youtube__youtube_list_playlists": "read",
     "mcp__youtube__youtube_liked_videos": "read",

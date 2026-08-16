@@ -1,4 +1,4 @@
-"""Agent SDK hello world (TRD §17 Phase 1).
+"""Agent SDK hello world (README.md's Suggested Build Order, Phase 1).
 
 One query through the Claude Agent SDK, traced through Langfuse when
 credentials are present. No custom tools, no trigger server, no memory

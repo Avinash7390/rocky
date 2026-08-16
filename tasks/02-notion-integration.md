@@ -1,6 +1,6 @@
 # Phase 2 — Notion Integration
 
-**Build order:** TRD §17, step 2. **Depends on:** Phase 1 (Foundations).
+**Build order:** README.md's Suggested Build Order, step 2. **Depends on:** Phase 1 (Foundations).
 
 ## Goal
 
@@ -10,7 +10,8 @@ gate on a real write action (page creation) before anything higher-stakes.
 
 ## Scope
 
-- Notion internal integration token (no OAuth flow) — TRD §11.1.
+- Notion internal integration token (no OAuth flow) — see README.md's
+  Notion integration deep dive subsection.
 - One top-level "Agent Access" page shared with the integration; everything
   the agent should see organized as children of it.
 - Build against the current Notion API version (2025-09-03+): fetch
@@ -18,7 +19,8 @@ gate on a real write action (page creation) before anything higher-stakes.
 - A small request queue with exponential backoff for the ~3 req/s rate limit
   (page → block-children → nested-blocks fan-out).
 - Notion tool exposed to the orchestrator: read a page, create a page.
-- Permission gate (`canUseTool`, TRD §9) wired for the first time — classify
+- Permission gate (`canUseTool`, README.md's Orchestration Layer section)
+  wired for the first time — classify
   `notion.read_page` as read (auto-approve), `notion.create_page` as write
   (ask for confirmation via the trigger channel).
 
@@ -38,4 +40,4 @@ gate on a real write action (page creation) before anything higher-stakes.
 
 ## References
 
-TRD §9 (Permission gate), §11 and §11.1 (Notion deep dive), §17 step 2.
+README.md's Orchestration Layer (permission gate), Integration Layer, and Notion integration deep dive sections, plus Suggested Build Order (step 2).

@@ -1,4 +1,5 @@
-"""Spotify tools exposed to the orchestrator, per TRD §11.
+"""Spotify tools exposed to the orchestrator (README.md's Integration
+Layer section).
 
 All read-only (currently-playing, recently-played, playlists) — no write
 path, so nothing here needs a permission-gate "write" entry. spotipy is
