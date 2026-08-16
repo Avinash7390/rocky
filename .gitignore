@@ -157,6 +157,13 @@ ENV/
 env.bak/
 venv.bak/
 
+# Cached OAuth tokens (Google, Spotify) — never commit live credentials
+.google_token.json
+.spotify_token.json
+
+# Local per-machine cost-guardrail ledger (tools/cost_guard.py)
+.cost_ledger.json
+
 # Spyder project settings
 .spyderproject
 .spyproject
