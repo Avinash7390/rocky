@@ -18,6 +18,7 @@ never to silent allow, so a missing table entry is a minor annoyance
 """
 
 import asyncio
+import os
 from typing import Any, Literal
 
 from claude_agent_sdk import (
@@ -27,6 +28,13 @@ from claude_agent_sdk import (
 )
 
 RiskTier = Literal["read", "write", "destructive"]
+
+# Dev/staging mode (TRD §15 flowchart): in "dev"/"staging", write and
+# destructive calls auto-approve instead of blocking on a prompt. Defaults
+# to "prod" (always ask) so a missing/unset AGENT_MODE fails toward safety,
+# not convenience — you have to opt into the looser mode explicitly.
+AGENT_MODE = os.environ.get("AGENT_MODE", "prod").strip().lower()
+_DEV_MODES = {"dev", "development", "staging"}
 
 # Tool names are MCP-qualified: mcp__<server_name>__<tool_name>.
 RISK_TIERS: dict[str, RiskTier] = {
@@ -52,6 +60,22 @@ RISK_TIERS: dict[str, RiskTier] = {
     "mcp__github__create_or_update_file": "write",
     "mcp__github__push_files": "write",
     "mcp__github__delete_file": "destructive",
+    # Gmail (TRD §11)
+    "mcp__gmail__gmail_search": "read",
+    "mcp__gmail__gmail_send": "write",
+    # Google Drive (TRD §11) — read-only scope, no write tool exists
+    "mcp__drive__drive_search": "read",
+    # Google Calendar (TRD §11)
+    "mcp__calendar__calendar_list_events": "read",
+    "mcp__calendar__calendar_create_event": "write",
+    # Spotify (TRD §11) — read-only use case, no write tools exist
+    "mcp__spotify__spotify_currently_playing": "read",
+    "mcp__spotify__spotify_recently_played": "read",
+    "mcp__spotify__spotify_playlists": "read",
+    # YouTube (TRD §11, §11.2) — read-only scope, no write tools exist
+    "mcp__youtube__youtube_list_subscriptions": "read",
+    "mcp__youtube__youtube_list_playlists": "read",
+    "mcp__youtube__youtube_liked_videos": "read",
 }
 
 _ASK_TIERS = {"write", "destructive"}
@@ -74,6 +98,9 @@ async def can_use_tool(
     tier = RISK_TIERS.get(tool_name, "write")
 
     if tier not in _ASK_TIERS:
+        return PermissionResultAllow()
+
+    if AGENT_MODE in _DEV_MODES:
         return PermissionResultAllow()
 
     approved = await asyncio.to_thread(_confirm, tool_name, tool_input)
